@@ -10,13 +10,15 @@
       src="https://kit.fontawesome.com/5a97a57cc7.js"
       crossorigin="anonymous"
     ></script>
+    <!-- css(추후 웹팩 js 번들링을 통해 삭제 예정) -->
+    <link rel="stylesheet" href="./src/css/style.css" />
   </head>
   <body>
     <header class="header">
       <div class="header__head">
         <div class="logo">
           <a class="logo__link" href="#">
-            <i class="fa-brands fa-airbnb"></i>
+            <i class="fa-brands fa-airbnb"></i> JayBnB
           </a>
         </div>
         <div class="search-form">
@@ -30,7 +32,7 @@
         <div class="header__etc">
           <div class="tobe-host">호스트 되기</div>
           <div class="language-setting">
-            <i class="fa fa-regular fa-globe"></i>
+            <i class="fa-solid fa-earth-asia"></i>
           </div>
           <div class="user-info">
             <i class="fa-solid fa-bars"></i>
@@ -112,9 +114,11 @@
               <p>호숫가</p>
             </li>
           </ul>
-          <div class="place-concept__next-btn"></div>
+          <div class="place-concept__next-btn">
+            <i class="fa-solid fa-chevron-right"></i>
+          </div>
           <div class="place-concept__filter">
-            <img src="" alt="" />
+            <i class="fa-solid fa-ellipsis-vertical"></i>
             <span>필터</span>
           </div>
         </div>
