@@ -5,6 +5,7 @@ import {
   nowMonth,
 } from './calendar.js';
 import '../css/style.css';
+
 // '언제든 일주일' 클릭 시 달력
 const $searchWhenBtn = document.querySelector('.search-form__when');
 
@@ -108,7 +109,7 @@ function makeAfterCalendar(monthList) {
 const $prevMonthSection = document.querySelector('.calendar__prev-month');
 const $afterMonthSection = document.querySelector('.calendar__after-month');
 
-// 캘린더 모달 창 바깥 클릭 시 닫히게
+// 클릭 시 캘린더 모달 띄우기
 $searchWhenBtn.addEventListener('click', () => {
   $calendar.classList.add('calendar');
   document.body.style.backgroundColor = 'rgba(128, 128, 128, 0.3)';
@@ -136,18 +137,89 @@ $searchWhenBtn.addEventListener('click', () => {
     $tempAfterTitle,
     document.querySelector('.calendar__after-body')
   );
+
+  document.querySelectorAll('.search-form div').forEach((node, i) => {
+    if (i === 0) {
+      node.innerHTML = '숙소';
+    } else if (i === 1) {
+      node.innerHTML = '체험';
+    } else if (i === 2) {
+      node.innerHTML = '온라인 체험';
+      node.style.color = 'black';
+    } else {
+      node.style.display = 'none';
+      node.parentElement.style.border = 'transparent';
+    }
+  });
+
+  // header__body display none
+  document.querySelector('.place-concept__list').style.display = 'none';
+  document.querySelector('.place-concept__next-btn').style.display = 'none';
+  document.querySelector('.place-concept__filter').style.display = 'none';
+
+  // 모달창 생성 시 header__body content
+  document.querySelector(
+    '.place-concept'
+  ).innerHTML += `<div class="search__form--temp">
+  <div class="where--temp">
+    <p class="title--temp">여행지</p>
+    <p class="content--temp">여행지 검색</p>
+  </div>
+  <div class="when-check-in--temp">
+    <p class="title--temp">체크인</p>
+    <p class="content--temp check-in__info">날짜 입력</p>
+  </div>
+  <div class="when-check-out--temp">
+    <p class="title--temp">체크아웃</p>
+    <p class="content--temp check-out__info">날짜 입력</p>
+  </div>
+  <div class="who--temp">
+    <p class="title--temp">여행자</p>
+    <p class="content--temp">게스트 추가</p>
+  </div>
+  <div class="search-button--temp">
+    <div class="search-button__outer">
+      <i class="fa-solid fa-magnifying-glass search-etc--temp"></i>
+      <span class="search-etc--temp">검색</span>
+    </div>
+  </div>
+</div>`;
+
+  document.querySelector('.header').style.backgroundColor = 'white';
 });
 
+// 모달창 외부 클릭 시 원래 모습으로 돌아오기
 window.addEventListener('click', (event) => {
-  if (event.target === $modalBackground) {
-    $calendar.classList.remove('calendar');
-    document.body.style.backgroundColor = 'white';
-    $modalBackground.style.zIndex = 0;
+  if (event.target !== $modalBackground) {
+    return;
   }
+  $calendar.classList.remove('calendar');
+  document.body.style.backgroundColor = 'white';
+  $modalBackground.style.zIndex = 0;
+
+  document.querySelectorAll('.search-form div').forEach((node, i) => {
+    if (i === 0) {
+      node.innerHTML = '어디든지';
+    } else if (i === 1) {
+      node.innerHTML = '언제든 일주일';
+    } else if (i === 2) {
+      node.innerHTML = '게스트 추가';
+      node.style.color = '#a5a5a5';
+    } else {
+      node.style.display = 'block';
+      node.parentElement.style.border = '1px solid #a5a5a5';
+    }
+  });
+
+  // header__body display flex
+  document.querySelector('.place-concept__list').style.display = 'flex';
+  document.querySelector('.place-concept__next-btn').style.display = 'flex';
+  document.querySelector('.place-concept__filter').style.display = 'flex';
+
+  document.querySelector('.search__form--temp').style.display = 'none';
 });
 
 $calendar.addEventListener('click', (event) => {
-  console.log(event.target.innerHTML);
   if (isNaN(Number(event.target.innerHTML)) || event.target.innerHTML === '') {
     return;
   }

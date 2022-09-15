@@ -132,6 +132,36 @@ body {
   padding: 15px;
   font-size: 12px;
 }
+.header .header__body .place-concept .search__form--temp {
+  width: 80%;
+  height: 80%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  margin-left: 10%;
+  border: 1px solid #a5a5a5;
+  border-radius: 50px;
+  background-color: #ebebeb;
+}
+.header .header__body .place-concept .search__form--temp .where--temp {
+  margin-right: 20%;
+}
+.header .header__body .place-concept .search__form--temp div .title--temp {
+  font-size: 14px;
+  font-weight: bold;
+  padding-bottom: 5px;
+}
+.header .header__body .place-concept .search__form--temp div .content--temp {
+  font-size: 12px;
+  color: #5a5a5a;
+}
+.header .header__body .place-concept .search__form--temp .when-check-in--temp {
+  background-color: #ffffff;
+  padding: 3% 8% 3% 3%;
+  border-radius: 25px;
+  box-shadow: 1px 1px 10px #a5a5a5;
+}
 
 .main {
   width: 100%;
@@ -183,7 +213,7 @@ body {
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  border: 1px solid #ffffff;
+  border: 1px solid #ebebeb;
   border-radius: 30px;
   background-color: white;
   z-index: 2;
@@ -274,9 +304,13 @@ body {
   border-radius: 20px;
   color: #5a5a5a;
 }
+.calendar__footer .calendar__option-accurate-date {
+  border: 1px solid #222222;
+}
 
 .modal-background {
   position: absolute;
+  top: 30%;
   width: 100%;
   height: 100%;
 }

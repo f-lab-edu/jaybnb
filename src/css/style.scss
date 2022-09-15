@@ -164,6 +164,43 @@ body {
         padding: 15px;
         font-size: $font_medium;
       }
+
+      // search__form--temp
+      .search__form--temp {
+        width: 80%;
+        height: 80%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        margin-left: 10%;
+        border: 1px solid $color_gray;
+        border-radius: 50px;
+        background-color: $color_light_gray;
+
+        .where--temp {
+          margin-right: 20%;
+        }
+        div {
+          .title--temp {
+            font-size: $font_large;
+            font-weight: bold;
+            padding-bottom: 5px;
+          }
+
+          .content--temp {
+            font-size: $font_medium;
+            color: $color_dark_gray;
+          }
+        }
+
+        .when-check-in--temp {
+          background-color: $color_white;
+          padding: 3% 8% 3% 3%;
+          border-radius: 25px;
+          box-shadow: 1px 1px 10px $color_gray;
+        }
+      }
     }
   }
 }
@@ -225,7 +262,7 @@ body {
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  border: 1px solid $color_white;
+  border: 1px solid $color_light_gray;
   border-radius: 30px;
   background-color: white;
   z-index: 2;
@@ -328,11 +365,17 @@ body {
       border-radius: 20px;
       color: $color_dark_gray;
     }
+
+    .calendar__option-accurate-date {
+      border: 1px solid $color_black;
+    }
   }
 }
 
+// 모달 창 외부
 .modal-background {
   position: absolute;
+  top: 30%;
   width: 100%;
   height: 100%;
 }
