@@ -278,6 +278,18 @@ body {
   background-color: white;
   z-index: 2;
 
+  &__back-button {
+    position: absolute;
+    top: 20%;
+    left: 5%;
+  }
+
+  &__next-button {
+    position: absolute;
+    top: 20%;
+    right: 5%;
+  }
+
   &__header {
     margin-top: 20px;
     width: 40%;

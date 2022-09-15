@@ -227,6 +227,16 @@ body {
   background-color: white;
   z-index: 2;
 }
+.calendar__back-button {
+  position: absolute;
+  top: 20%;
+  left: 5%;
+}
+.calendar__next-button {
+  position: absolute;
+  top: 20%;
+  right: 5%;
+}
 .calendar__header {
   margin-top: 20px;
   width: 40%;

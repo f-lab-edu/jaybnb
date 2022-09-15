@@ -4,8 +4,12 @@ import {
   nowYear,
   nowMonth,
   nowDate,
+  makePrevMonthList,
+  makeAfterMonthList,
 } from './calendar.js';
 import '../css/style.css';
+let tempYear = nowYear;
+let tempMonth = nowMonth;
 
 // '언제든 일주일' 클릭 시 달력
 const $searchWhenBtn = document.querySelector('.search-form__when');
@@ -30,11 +34,14 @@ const $modalBackground = document.querySelector('.modal-background');
 const selectDatePrev = [];
 const selectDateAfter = [];
 
+const $prevMonthSection = document.querySelector('.calendar__prev-month');
+const $afterMonthSection = document.querySelector('.calendar__after-month');
+
 $searchWhenBtn.addEventListener('click', () => {
   if ($prevFirstRow.innerHTML !== '') {
     return;
   }
-  makePrevCalendar(prevMonthList);
+  makePrevCalendar(makePrevMonthList(tempYear, tempMonth));
   [...document.querySelectorAll('.prev')].forEach((ele) => {
     if (+ele.innerHTML < nowDate) {
       ele.style.color = 'lightgray';
@@ -43,6 +50,14 @@ $searchWhenBtn.addEventListener('click', () => {
 });
 
 function makePrevCalendar(monthList) {
+  // 초기화(버튼 기능 추가 위해)
+  $prevFirstRow.innerHTML = '';
+  $prevSecondRow.innerHTML = '';
+  $prevThirdRow.innerHTML = '';
+  $prevFourthRow.innerHTML = '';
+  $prevFifthRow.innerHTML = '';
+  $prevSixthRow.innerHTML = '';
+
   // 달력 시작부분 빈값 채우기
   for (let i = 0; i < monthList[0].getDay(); i++) {
     $prevFirstRow.innerHTML += `<td></td>`;
@@ -91,10 +106,17 @@ $searchWhenBtn.addEventListener('click', () => {
   if ($afterFirstRow.innerHTML !== '') {
     return;
   }
-  makeAfterCalendar(afterMonthList);
+  makeAfterCalendar(makeAfterMonthList(tempYear, tempMonth));
 });
 
 function makeAfterCalendar(monthList) {
+  // 초기화(버튼 기능 추가 위해)
+  $afterFirstRow.innerHTML = '';
+  $afterSecondRow.innerHTML = '';
+  $afterThirdRow.innerHTML = '';
+  $afterFourthRow.innerHTML = '';
+  $afterFifthRow.innerHTML = '';
+  $afterSixthRow.innerHTML = '';
   // 달력 시작부분 빈값 채우기
   for (let i = 0; i < monthList[0].getDay(); i++) {
     $afterFirstRow.innerHTML += `<td></td>`;
@@ -139,9 +161,6 @@ function makeAfterCalendar(monthList) {
   }
 }
 
-const $prevMonthSection = document.querySelector('.calendar__prev-month');
-const $afterMonthSection = document.querySelector('.calendar__after-month');
-
 // 클릭 시 캘린더 모달 띄우기
 $searchWhenBtn.addEventListener('click', () => {
   $calendar.classList.add('calendar');
@@ -157,7 +176,7 @@ $searchWhenBtn.addEventListener('click', () => {
   }
   const $tempPrevTitle = document.createElement('div');
   $tempPrevTitle.className = 'calendar__prev-title';
-  $tempPrevTitle.innerHTML = `${nowYear}년 ${nowMonth + 1}월`;
+  $tempPrevTitle.innerHTML = `${tempYear}년 ${tempMonth + 1}월`;
   $prevMonthSection.insertBefore(
     $tempPrevTitle,
     document.querySelector('.calendar__prev-body')
@@ -165,7 +184,7 @@ $searchWhenBtn.addEventListener('click', () => {
 
   const $tempAfterTitle = document.createElement('div');
   $tempAfterTitle.className = 'calendar__after-title';
-  $tempAfterTitle.innerHTML = `${nowYear}년 ${nowMonth + 2}월`;
+  $tempAfterTitle.innerHTML = `${tempYear}년 ${tempMonth + 2}월`;
   $afterMonthSection.insertBefore(
     $tempAfterTitle,
     document.querySelector('.calendar__after-body')
@@ -248,7 +267,6 @@ window.addEventListener('click', (event) => {
   document.querySelector('.place-concept__list').style.display = 'flex';
   document.querySelector('.place-concept__next-btn').style.display = 'flex';
   document.querySelector('.place-concept__filter').style.display = 'flex';
-
   document.querySelector('.search__form--temp').style.display = 'none';
 });
 
@@ -330,6 +348,9 @@ $calendar.addEventListener('click', (event) => {
       '#ebebeb';
     document.querySelector('.when-check-in--temp').style.padding = '0';
     document.querySelector('.when-check-in--temp').style.boxShadow = 'none';
+    checkInInfo.style.color = 'black';
+    checkInInfo.style.fontSize = '16px';
+    checkInInfo.style.fontWeight = 'bold';
 
     document.querySelector('.when-check-out--temp').style.backgroundColor =
       'white';
@@ -342,5 +363,70 @@ $calendar.addEventListener('click', (event) => {
     checkOutInfo.innerHTML = `${targetDate.classList[2].split('-')[1]}월 ${
       targetDate.classList[2].split('-')[2]
     }일`;
+
+    checkOutInfo.style.color = 'black';
+    checkOutInfo.style.fontSize = '16px';
+    checkOutInfo.style.fontWeight = 'bold';
   }
+});
+
+const backBtn = document.querySelector('.calendar__back-button');
+const nextBtn = document.querySelector('.calendar__next-button');
+let btnCount = 0;
+backBtn.addEventListener('click', (event) => {
+  tempMonth--;
+  btnCount--;
+
+  makePrevCalendar(makePrevMonthList(tempYear, tempMonth));
+  makeAfterCalendar(makeAfterMonthList(tempYear, tempMonth));
+
+  if (btnCount <= 0) {
+    backBtn.style.display = 'none';
+  }
+
+  document.querySelector('.calendar__after-title').innerHTML = `${tempYear}년 ${
+    tempMonth + 2
+  }월`;
+  // 연도 넘어가는 부분
+  if (tempMonth <= -1) {
+    tempMonth = 11;
+    --tempYear;
+  }
+  document.querySelector('.calendar__prev-title').innerHTML = `${tempYear}년 ${
+    tempMonth + 1
+  }월`;
+
+  // 달력 이전으로 돌릴 때, 현재 달의 현재 일 전 일들 회색 적용
+  [...document.querySelectorAll('.prev')].forEach((ele) => {
+    if (
+      +ele.innerHTML < nowDate &&
+      +ele.classList[2].split('-')[1] === nowMonth + 1
+    ) {
+      ele.style.color = 'lightgray';
+    }
+  });
+});
+
+nextBtn.addEventListener('click', (event) => {
+  tempMonth++;
+  btnCount++;
+  makePrevCalendar(makePrevMonthList(tempYear, tempMonth));
+  makeAfterCalendar(makeAfterMonthList(tempYear, tempMonth));
+
+  if (btnCount > 0) {
+    backBtn.style.display = 'block';
+  }
+
+  document.querySelector('.calendar__prev-title').innerHTML = `${tempYear}년 ${
+    tempMonth + 1
+  }월`;
+
+  // 연도 넘어가는 부분
+  if (tempMonth >= 11) {
+    tempMonth = -1;
+    ++tempYear;
+  }
+  document.querySelector('.calendar__after-title').innerHTML = `${tempYear}년 ${
+    tempMonth + 2
+  }월`;
 });
