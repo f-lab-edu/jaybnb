@@ -3,6 +3,7 @@ import {
   afterMonthList,
   nowYear,
   nowMonth,
+  nowDate,
 } from './calendar.js';
 import '../css/style.css';
 
@@ -26,11 +27,19 @@ const $afterSixthRow = document.querySelector('.after-sixth-row');
 const $calendar = document.querySelector('.calendar-hidden');
 const $modalBackground = document.querySelector('.modal-background');
 
+const selectDatePrev = [];
+const selectDateAfter = [];
+
 $searchWhenBtn.addEventListener('click', () => {
   if ($prevFirstRow.innerHTML !== '') {
     return;
   }
   makePrevCalendar(prevMonthList);
+  [...document.querySelectorAll('.prev')].forEach((ele) => {
+    if (+ele.innerHTML < nowDate) {
+      ele.style.color = 'lightgray';
+    }
+  });
 });
 
 function makePrevCalendar(monthList) {
@@ -42,22 +51,34 @@ function makePrevCalendar(monthList) {
   for (let date of monthList) {
     switch (weekCount) {
       case 0:
-        $prevFirstRow.innerHTML += `<td class="table__number">${date.getDate()}</td>`;
+        $prevFirstRow.innerHTML += `<td class="table__number prev prev-${
+          date.getMonth() + 1
+        }-${date.getDate()}">${date.getDate()}</td>`;
         break;
       case 1:
-        $prevSecondRow.innerHTML += `<td class="table__number">${date.getDate()}</td>`;
+        $prevSecondRow.innerHTML += `<td class="table__number prev prev-${
+          date.getMonth() + 1
+        }-${date.getDate()}">${date.getDate()}</td>`;
         break;
       case 2:
-        $prevThirdRow.innerHTML += `<td class="table__number">${date.getDate()}</td>`;
+        $prevThirdRow.innerHTML += `<td class="table__number prev prev-${
+          date.getMonth() + 1
+        }-${date.getDate()}">${date.getDate()}</td>`;
         break;
       case 3:
-        $prevFourthRow.innerHTML += `<td class="table__number">${date.getDate()}</td>`;
+        $prevFourthRow.innerHTML += `<td class="table__number prev prev-${
+          date.getMonth() + 1
+        }-${date.getDate()}">${date.getDate()}</td>`;
         break;
       case 4:
-        $prevFifthRow.innerHTML += `<td class="table__number">${date.getDate()}</td>`;
+        $prevFifthRow.innerHTML += `<td class="table__number prev prev-${
+          date.getMonth() + 1
+        }-${date.getDate()}">${date.getDate()}</td>`;
         break;
       case 5:
-        $prevSixthRow.innerHTML += `<td class="table__number">${date.getDate()}</td>`;
+        $prevSixthRow.innerHTML += `<td class="table__number prev prev-${
+          date.getMonth() + 1
+        }-${date.getDate()}">${date.getDate()}</td>`;
         break;
     }
     if (date.getDay() === 6) {
@@ -82,22 +103,34 @@ function makeAfterCalendar(monthList) {
   for (let date of monthList) {
     switch (weekCount) {
       case 0:
-        $afterFirstRow.innerHTML += `<td class="table__number">${date.getDate()}</td>`;
+        $afterFirstRow.innerHTML += `<td class="table__number after after-${
+          date.getMonth() + 1
+        }-${date.getDate()}">${date.getDate()}</td>`;
         break;
       case 1:
-        $afterSecondRow.innerHTML += `<td class="table__number">${date.getDate()}</td>`;
+        $afterSecondRow.innerHTML += `<td class="table__number after after-${
+          date.getMonth() + 1
+        }-${date.getDate()}">${date.getDate()}</td>`;
         break;
       case 2:
-        $afterThirdRow.innerHTML += `<td class="table__number">${date.getDate()}</td>`;
+        $afterThirdRow.innerHTML += `<td class="table__number after after-${
+          date.getMonth() + 1
+        }-${date.getDate()}">${date.getDate()}</td>`;
         break;
       case 3:
-        $afterFourthRow.innerHTML += `<td class="table__number">${date.getDate()}</td>`;
+        $afterFourthRow.innerHTML += `<td class="table__number after after-${
+          date.getMonth() + 1
+        }-${date.getDate()}">${date.getDate()}</td>`;
         break;
       case 4:
-        $afterFifthRow.innerHTML += `<td class="table__number">${date.getDate()}</td>`;
+        $afterFifthRow.innerHTML += `<td class="table__number after after-${
+          date.getMonth() + 1
+        }-${date.getDate()}">${date.getDate()}</td>`;
         break;
       case 5:
-        $afterSixthRow.innerHTML += `<td class="table__number">${date.getDate()}</td>`;
+        $afterSixthRow.innerHTML += `<td class="table__number after after-${
+          date.getMonth() + 1
+        }-${date.getDate()}">${date.getDate()}</td>`;
         break;
     }
     if (date.getDay() === 6) {
@@ -220,10 +253,68 @@ window.addEventListener('click', (event) => {
 });
 
 $calendar.addEventListener('click', (event) => {
-  if (isNaN(Number(event.target.innerHTML)) || event.target.innerHTML === '') {
+  const targetDate = event.target;
+
+  if (isNaN(Number(targetDate.innerHTML)) || targetDate.innerHTML === '') {
     return;
   }
-  event.target.style.borderRadius = '50%';
-  event.target.style.backgroundColor = 'black';
-  event.target.style.color = 'white';
+
+  // 전달력, 다음달력 데이터 각각 리스트에 담아주기
+  const monthFirstWord = targetDate.classList[1][0];
+  if (monthFirstWord === 'p') {
+    selectDatePrev.push(targetDate);
+  } else {
+    selectDateAfter.push(targetDate);
+  }
+
+  // 달력 버튼 스타일
+  function dateSelectedStyle(target) {
+    target.style.borderRadius = '50%';
+    target.style.backgroundColor = 'black';
+    target.style.color = 'white';
+  }
+  // 오늘 기준 과거 날짜는 스타일 적용 X
+  if (targetDate.style.color !== 'lightgray') {
+    dateSelectedStyle(targetDate);
+  }
+
+  if (selectDatePrev.length + selectDateAfter.length === 2) {
+    if (selectDatePrev.length === 2) {
+      const firstDate = +selectDatePrev[0].innerHTML;
+      const secondDate = +selectDatePrev[1].innerHTML;
+
+      document.querySelectorAll('.prev').forEach((ele) => {
+        if (+ele.innerHTML > firstDate && +ele.innerHTML < secondDate) {
+          ele.style.backgroundColor = 'lightgray';
+          ele.style.borderRadius = 0;
+        }
+      });
+    } else if (selectDateAfter.length === 2) {
+      const firstDate = +selectDateAfter[0].innerHTML;
+      const secondDate = +selectDateAfter[1].innerHTML;
+
+      document.querySelectorAll('.after').forEach((ele) => {
+        if (+ele.innerHTML > firstDate && +ele.innerHTML < secondDate) {
+          ele.style.backgroundColor = 'lightgray';
+          ele.style.borderRadius = 0;
+        }
+      });
+    } else if (selectDatePrev.length === 1 && selectDateAfter.length === 1) {
+      const firstDate = +selectDatePrev[0].innerHTML;
+      const secondDate = +selectDateAfter[0].innerHTML;
+
+      document.querySelectorAll('.prev').forEach((ele) => {
+        if (+ele.innerHTML > firstDate) {
+          ele.style.backgroundColor = 'lightgray';
+          ele.style.borderRadius = 0;
+        }
+      });
+      document.querySelectorAll('.after').forEach((ele) => {
+        if (+ele.innerHTML < secondDate) {
+          ele.style.backgroundColor = 'lightgray';
+          ele.style.borderRadius = 0;
+        }
+      });
+    }
+  }
 });

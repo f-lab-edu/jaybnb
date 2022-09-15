@@ -1,7 +1,7 @@
 const current = new Date();
 export const nowYear = current.getFullYear();
 export const nowMonth = current.getMonth();
-const nowDate = current.getDate();
+export const nowDate = current.getDate();
 
 const prevMonthObj = new Date(nowYear, nowMonth + 1, 0);
 const prevMonthLastDate = prevMonthObj.getDate();

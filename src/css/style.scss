@@ -181,6 +181,7 @@ body {
         .where--temp {
           margin-right: 20%;
         }
+
         div {
           .title--temp {
             font-size: $font_large;
@@ -199,6 +200,16 @@ body {
           padding: 3% 8% 3% 3%;
           border-radius: 25px;
           box-shadow: 1px 1px 10px $color_gray;
+        }
+
+        .search-button__outer {
+          padding: 20px 15px;
+          margin-left: 20px;
+          border-radius: 20px;
+          background-color: $color_red;
+          color: $color_white;
+          font-size: $font_large;
+          font-weight: bold;
         }
       }
     }

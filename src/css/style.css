@@ -162,6 +162,15 @@ body {
   border-radius: 25px;
   box-shadow: 1px 1px 10px #a5a5a5;
 }
+.header .header__body .place-concept .search__form--temp .search-button__outer {
+  padding: 20px 15px;
+  margin-left: 20px;
+  border-radius: 20px;
+  background-color: #ff385c;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: bold;
+}
 
 .main {
   width: 100%;
