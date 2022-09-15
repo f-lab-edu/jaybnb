@@ -277,7 +277,7 @@ $calendar.addEventListener('click', (event) => {
   if (targetDate.style.color !== 'lightgray') {
     dateSelectedStyle(targetDate);
   }
-
+  // 선택한 날짜 사이 스타일 변경하기
   if (selectDatePrev.length + selectDateAfter.length === 2) {
     if (selectDatePrev.length === 2) {
       const firstDate = +selectDatePrev[0].innerHTML;
@@ -285,7 +285,7 @@ $calendar.addEventListener('click', (event) => {
 
       document.querySelectorAll('.prev').forEach((ele) => {
         if (+ele.innerHTML > firstDate && +ele.innerHTML < secondDate) {
-          ele.style.backgroundColor = 'lightgray';
+          ele.style.backgroundColor = '#ebebeb';
           ele.style.borderRadius = 0;
         }
       });
@@ -295,7 +295,7 @@ $calendar.addEventListener('click', (event) => {
 
       document.querySelectorAll('.after').forEach((ele) => {
         if (+ele.innerHTML > firstDate && +ele.innerHTML < secondDate) {
-          ele.style.backgroundColor = 'lightgray';
+          ele.style.backgroundColor = '#ebebeb';
           ele.style.borderRadius = 0;
         }
       });
@@ -305,16 +305,42 @@ $calendar.addEventListener('click', (event) => {
 
       document.querySelectorAll('.prev').forEach((ele) => {
         if (+ele.innerHTML > firstDate) {
-          ele.style.backgroundColor = 'lightgray';
+          ele.style.backgroundColor = '#ebebeb';
           ele.style.borderRadius = 0;
         }
       });
       document.querySelectorAll('.after').forEach((ele) => {
         if (+ele.innerHTML < secondDate) {
-          ele.style.backgroundColor = 'lightgray';
+          ele.style.backgroundColor = '#ebebeb';
           ele.style.borderRadius = 0;
         }
       });
     }
+  }
+
+  // 날짜 클릭 시 새로운 헤더에 해당 날짜 입력
+  const checkInInfo = document.querySelector('.check-in__info');
+  const checkOutInfo = document.querySelector('.check-out__info');
+
+  if (checkInInfo.innerHTML === '날짜 입력') {
+    checkInInfo.innerHTML = `${targetDate.classList[2].split('-')[1]}월 ${
+      targetDate.classList[2].split('-')[2]
+    }일`;
+    document.querySelector('.when-check-in--temp').style.backgroundColor =
+      '#ebebeb';
+    document.querySelector('.when-check-in--temp').style.padding = '0';
+    document.querySelector('.when-check-in--temp').style.boxShadow = 'none';
+
+    document.querySelector('.when-check-out--temp').style.backgroundColor =
+      'white';
+    document.querySelector('.when-check-out--temp').style.padding =
+      '3% 8% 3% 3%';
+    document.querySelector('.when-check-out--temp').style.borderRadius = '25px';
+    document.querySelector('.when-check-out--temp').style.boxShadow =
+      '1px 1px 10px #a5a5a5a5';
+  } else {
+    checkOutInfo.innerHTML = `${targetDate.classList[2].split('-')[1]}월 ${
+      targetDate.classList[2].split('-')[2]
+    }일`;
   }
 });
