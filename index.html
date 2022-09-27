@@ -5,15 +5,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>인생은 여행이야 - 제이비앤비 - JayBnB</title>
-    <!-- font-awesom -->
+    <!-- font-awesome -->
     <script
       src="https://kit.fontawesome.com/5a97a57cc7.js"
       crossorigin="anonymous"
     ></script>
-    <!-- css(추후 웹팩 js 번들링을 통해 삭제 예정) -->
-    <link rel="stylesheet" href="./src/css/style.css" />
+
+    <script defer src="./dist/bundle.js" type="module"></script>
   </head>
   <body>
+    <div class="modal-background"></div>
     <header class="header">
       <div class="header__head">
         <div class="logo">
@@ -145,5 +146,85 @@
         관한 의무와 책임은 해당 서비스를 제공하는 호스트에게 있습니다.
       </div>
     </footer>
+    <div class="calendar-hidden">
+      <div class="calendar__back-button" style="display: none"><</div>
+      <div class="calendar__next-button">></div>
+      <div class="calendar__header">
+        <div class="calendar__select-day">날짜 선택</div>
+        <div class="calenar__select-flexible">유연한 일정</div>
+      </div>
+      <div class="calendar__main">
+        <section class="calendar__prev-month">
+          <table class="calendar__prev-body">
+            <thead>
+              <td>일</td>
+              <td>월</td>
+              <td>화</td>
+              <td>수</td>
+              <td>목</td>
+              <td>금</td>
+              <td>토</td>
+            </thead>
+            <tr class="prev-first-row"></tr>
+            <tr class="prev-second-row"></tr>
+            <tr class="prev-third-row"></tr>
+            <tr class="prev-fourth-row"></tr>
+            <tr class="prev-fifth-row"></tr>
+            <tr class="prev-sixth-row"></tr>
+          </table>
+        </section>
+        <section class="calendar__after-month">
+          <table class="calendar__after-body">
+            <thead>
+              <td>일</td>
+              <td>월</td>
+              <td>화</td>
+              <td>수</td>
+              <td>목</td>
+              <td>금</td>
+              <td>토</td>
+            </thead>
+            <tr class="after-first-row"></tr>
+            <tr class="after-second-row"></tr>
+            <tr class="after-third-row"></tr>
+            <tr class="after-fourth-row"></tr>
+            <tr class="after-fifth-row"></tr>
+            <tr class="after-sixth-row"></tr>
+          </table>
+        </section>
+      </div>
+      <div class="calendar__footer">
+        <div class="calendar__option-accurate-date">정확한 날짜</div>
+        <div class="calendar__option-one">± 1일</div>
+        <div class="calendar__option-two">± 2일</div>
+        <div class="calendar__option-three">± 3일</div>
+        <div class="calendar__option-seven">± 7일</div>
+      </div>
+    </div>
   </body>
 </html>
+
+<!-- <div class="search__form--temp">
+  <div class="where--temp">
+    <p class="title--temp">여행지</p>
+    <p class="content--temp">여행지 검색</p>
+  </div>
+  <div class="when-check-in--temp">
+    <p class="title--temp">체크인</p>
+    <p class="content--temp check-in__info">날짜 입력</p>
+  </div>
+  <div class="when-check-out--temp">
+    <p class="title--temp">체크아웃</p>
+    <p class="content--temp check-out__info">날짜 입력</p>
+  </div>
+  <div class="who--temp">
+    <p class="title--temp">여행자</p>
+    <p class="content--temp">게스트 추가</p>
+  </div>
+  <div class="search-button--temp">
+    <div class="search-button__outer">
+      <i class="fa-solid fa-magnifying-glass search-etc--temp"></i>
+      <span class="search-etc--temp">검색</span>
+    </div>
+  </div>
+</div> -->
